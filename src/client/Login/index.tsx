@@ -1,16 +1,37 @@
 import React from 'react';
-import {Form, Button, Input, App} from 'antd';
-import {Link} from 'react-router-dom';
-import FormItem from 'antd/es/form/FormItem';
-//import '../../App.css';
+import {Form, Button, Input, message} from 'antd';
+import {Link, useNavigate} from 'react-router-dom';
+import {loginUser} from '../api/users'
 
 function Login() {
+    const navigate = useNavigate();
+    const onFinish = async (values) => {
+        try{
+            const response = await loginUser(values) as { success: boolean; message: string };
+            if (response.success) {
+                console.log(response.message);
+                message.success(response.message);
+                navigate('/Home')
+            }
+            else{
+                console.error(response.message);
+                message.error(response.message);
+                //App.message.error(response.message);
+            }
+
+        }catch(error){
+            console.error("Error logging in user:", error);
+            message.error("Error logging in user",error);
+            //App.message.error("Error logging in user");
+        }
+
+    };
   return (
-    <>
+    
     <main className='App-header'>
         <section className='mw-500 text-center px-3'>
             <h1>Login to BookitNow</h1>
-            <Form layout="vertical">
+            <Form layout="vertical" onFinish={onFinish}>
                 <Form.Item
                     label="Email"
                     htmlFor="email"
@@ -61,7 +82,7 @@ function Login() {
         </section>
     </main>
     
-    </>
+
   )
 }
 
