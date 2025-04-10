@@ -7,10 +7,16 @@ function Login() {
     const navigate = useNavigate();
     const onFinish = async (values) => {
         try{
-            const response = await loginUser(values) as { success: boolean; message: string };
+            const response = await loginUser(values) as { success: boolean; message: string; data?: string };
             if (response.success) {
                 console.log(response.message);
                 message.success(response.message);
+                if (response.data) {
+                    localStorage.setItem('token', response.data);
+                } else {
+                    console.error("Token is missing in the response.");
+                    message.error("Token is missing in the response.");
+                }
                 navigate('/Home')
             }
             else{

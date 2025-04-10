@@ -4,6 +4,7 @@ const express = require('express');
 const userRouter = express.Router();
 const UserModel = require('../models/userModel');
 const { message } = require('antd');
+const jwt = require('jsonwebtoken');
 
 userRouter.post('/register', async (req, res) => {
     console.log("Create User API Body",req.body);
@@ -33,6 +34,7 @@ userRouter.post('/login', async (req, res) => {
     const user = await UserModel.findOne({ email: req.body.email });
 
 
+
     try{
         if(!user){
             return res.status(400).json({ success: false, message: 'User not found' });
@@ -42,7 +44,13 @@ userRouter.post('/login', async (req, res) => {
             return res.status(400).json({ success: false, message: 'Invalid credentials' });
             // res.send({ success: false, message: 'Invalid credentials' });
         }
-        return res.status(200).json({ success: true, message: 'Login successful' });
+        const token =jwt.sign({userId: user._id },process.env.JWT_SECRET, {
+            expiresIn: '1d'
+        });
+        console.log("User Token:::::::",token);
+        
+        return res.status(200).json({ success: true, message: 'Login successful', data: token });
+
         
     }catch(err){
        return res.status(500).json({ message: err.message });

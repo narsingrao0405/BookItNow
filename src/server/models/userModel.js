@@ -17,7 +17,14 @@ const userSchema = new mongoose.Schema({
     isAdmin: {
         type: Boolean,
         default: false,
+        required: false,
     },
+    UserRole: {
+        type: string,
+        enum: ['admnin','user','partener'],
+        default: 'user',
+        required: false,
+    }
    
 });
 const UserModel = mongoose.model('users', userSchema);
