@@ -1,9 +1,13 @@
 import React from 'react';
 import {Form, Button, Input,message} from 'antd';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import{registerUser} from '../api/users';
 
+
+
 function Register() {
+
+    const navigate = useNavigate();
 
     const onFinish = async (values: any) => {
         console.log("Registering User",values);
@@ -14,7 +18,11 @@ function Register() {
           console.log("Register User Response", response);
           if (response.success) {
             message.success(response.message);
+            navigate('/login');
+            
+            //navigator('/login');
           } else {
+            console.error(response.message);
             message.error(response.message);
           }
         } catch (error) {

@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
         required: false,
     },
     UserRole: {
-        type: string,
+        type: String,
         enum: ['admnin','user','partener'],
         default: 'user',
         required: false,

@@ -1,8 +1,10 @@
-import './App.css'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Home from './client/Home'
-import Login from './client/Login'
-import Register from './client/Register'
+import React from 'react';
+import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './client/Home';
+import Login from './client/Login';
+import Register from './client/Register';
+
 
 function App() {
 
