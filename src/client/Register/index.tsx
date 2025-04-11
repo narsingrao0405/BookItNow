@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, Button, Input,message} from 'antd';
+import {Form, Button, Input,message, Alert} from 'antd';
 import {Link, useNavigate} from 'react-router-dom';
 import{registerUser} from '../api/users';
 
@@ -24,9 +24,12 @@ function Register() {
           } else {
             console.error(response.message);
             message.error(response.message);
+           // message.error(response.message);
+            <Alert message="Error registering user" description={response.message} type="error" showIcon />
           }
         } catch (error) {
           message.error(error.message);
+          <Alert message="Error registering user" description={error.message} type="error" showIcon />
         }
       };
 

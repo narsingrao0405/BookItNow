@@ -5,6 +5,7 @@ const userRouter = express.Router();
 const UserModel = require('../models/userModel');
 const { message } = require('antd');
 const jwt = require('jsonwebtoken');
+const authMiddleware = require('../middlewares/authMiddleware');
 
 userRouter.post('/register', async (req, res) => {
     console.log("Create User API Body",req.body);
@@ -56,6 +57,11 @@ userRouter.post('/login', async (req, res) => {
        return res.status(500).json({ message: err.message });
         //res.send({ success: false, message: err.message });
     }
+});
+
+userRouter.get('/current', authMiddleware, async (req, res) => {
+    console.log("Request Header ::::::::::::::", req.headers.authorization);
+    res.send({ success: true, message: "You are authorized user" });
 });
 
 module.exports = userRouter;

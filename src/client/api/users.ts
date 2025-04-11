@@ -28,3 +28,15 @@ export const loginUser = async (userData) => {
     }
 
 };
+
+export const GetCurrentUser = async () => {
+    try{
+        const response = await axiosInstance.get('/api/users/current');
+        return response.data;
+    }catch(error){
+        console.error("Error fetching current user", error);
+        throw error;
+    }
+
+
+}
