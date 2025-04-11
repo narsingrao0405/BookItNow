@@ -5,19 +5,20 @@ import {loginUser} from '../api/users'
 
 function Login() {
     const navigate = useNavigate();
-    const onFinish = async (values) => {
+    const onFinish = async (values: string) => {
         try{
             const response = await loginUser(values) as { success: boolean; message: string; data?: string };
             if (response.success) {
                 console.log(response.message);
                 message.success(response.message);
+          
                 if (response.data) {
                     localStorage.setItem('token', response.data);
                 } else {
                     console.error("Token is missing in the response.");
                     message.error("Token is missing in the response.");
                 }
-                navigate('/Home')
+               navigate('/Home')
             }
             else{
                 console.error(response.message);

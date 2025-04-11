@@ -5,8 +5,10 @@ const auth = (req, res,next) => {
         const token = req.headers.authorization.split(" ")[1];
         console.log("Token::::::::::", token);
         const verificationToken = jwt.verify(token, process.env.JWT_SECRET);
-        req.body.userId = verificationToken.userId;
-        console.log("User ID::::::::::", req.body.userId);
+        console.log("User ID Value is :::::::::::", verificationToken.userId);
+        //req.body.userId = verificationToken.userId;
+        req.user = {userId: verificationToken.userId}
+        console.log("User ID::::::::::", req.user.userId);
         next();
 
 

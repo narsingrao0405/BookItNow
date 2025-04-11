@@ -1,6 +1,7 @@
 
 const express= require('express');
 const cors = require('cors');
+const auth = require('./middlewares/authMiddleware');
 
 
 
@@ -20,6 +21,7 @@ app.use(cors({
 
 /*Routes*/
 app.use(express.json());
+app.use(auth);
 app.use(express.urlencoded({ extended: true }));
 app.use('/api/users', userRouter); 
 
