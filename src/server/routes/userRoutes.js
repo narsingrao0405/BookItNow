@@ -59,9 +59,9 @@ userRouter.post('/login', async (req, res) => {
     }
 });
 
-userRouter.get('/current', authMiddleware, async (req, res) => {
-    console.log("Request Header ::::::::::::::", req.headers.authorization);
-    res.send({ success: true, message: "You are authorized user" });
+userRouter.get('/get-current-user', authMiddleware, async (req, res) => {
+    const user = await UserModel.findById(req.user.userId).select('-password');
+    res.send({ success: true, data: user, message: "You are authorized to go the protected route" });
 });
 
 module.exports = userRouter;
