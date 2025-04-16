@@ -7,6 +7,8 @@ export const registerUser = async (values: any) => {
     try{
         console.log("Registering User:::::Before Calling API:::::",values);
         const response = await axiosInstance.post('/api/users/register', values);
+        
+        console.log("Register User Response:::::::", response);
         return response.data;
 
     }catch (error:any) {

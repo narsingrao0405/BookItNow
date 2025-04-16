@@ -6,7 +6,7 @@ const auth = (req, res,next) => {
         console.log("Token::::::::::", token);
         const verificationToken = jwt.verify(token, process.env.JWT_SECRET);
         console.log("User ID Value is :::::::::::", verificationToken.userId);
-        //req.body.userId = verificationToken.userId;
+        req.body.userId = verificationToken.userId;
         req.user = {userId: verificationToken.userId}
         console.log("User ID::::::::::", req.user.userId);
         next();

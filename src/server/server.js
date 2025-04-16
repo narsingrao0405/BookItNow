@@ -10,6 +10,7 @@ const app = express();
 require('dotenv').config();
 const connectDB = require('./config/db');
 const userRouter = require('./routes/userRoutes');
+const middlewareWrapper = require('cors');
 connectDB();
 // Enable CORS
 app.use(cors({
@@ -20,6 +21,7 @@ app.use(cors({
 
 
 /*Routes*/
+app.use(middlewareWrapper);
 app.use(express.json());
 app.use(auth);
 app.use(express.urlencoded({ extended: true }));

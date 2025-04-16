@@ -16,6 +16,7 @@ userRouter.post('/register', async (req, res) => {
             //res.send({ success: false, message: 'User already exists' });
         }else{
             const newUser = new UserModel(req.body);
+            console.log("New User Object",newUser);
             await newUser.save();
             return res.status(201).json({ success : true ,message: 'User registered successfully' });
             //res.send({ success: true, message: 'User registered successfully'});

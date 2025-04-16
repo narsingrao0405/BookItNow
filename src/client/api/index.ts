@@ -6,19 +6,12 @@ export const axiosInstance = axios.create({
     headers: {
         "Content-Type": "application/json",
         "Authorization": token ? `Bearer ${token}` : "",
-       // "Accept": "application/json",
     },
 });
-axiosInstance.interceptors.request.use(
-    function (config) {
-    const token = localStorage.getItem("token");
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
+axiosInstance.interceptors.request.use((config) => {
+    if (!config.headers) {
+        config.headers = {}; // Initialize headers if undefined
     }
+    config.headers["Authorization"] = token ? `Bearer ${token}` : "";
     return config;
-},
-function(error) {
-    // Do something with request error
-    return Promise.reject(error);
-}
-);
+});
