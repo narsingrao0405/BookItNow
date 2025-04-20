@@ -14,18 +14,19 @@ const middlewareWrapper = require('cors');
 connectDB();
 // Enable CORS
 app.use(cors({
-    origin: 'http://localhost:5173', // Allow requests from this origin
+    origin: '*', // Allow requests from any origin
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
     credentials: true // Allow cookies and credentials
 }));
 
 
 /*Routes*/
-app.use(middlewareWrapper);
-app.use(express.json());
-app.use(auth);
+//app.use(middlewareWrapper);
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use('/api/users', userRouter); 
+app.use(auth);
+
 
 
 
