@@ -17,7 +17,7 @@ function Register() {
           const response = await registerUser(values) as { success: boolean; message: string };
           console.log("Register User Response", response);
           if (response.success) {
-            message.success(response.message);
+            //message.success(response.message);
             navigate('/login');
             
             //navigator('/login');
@@ -25,11 +25,11 @@ function Register() {
             console.error(response.message);
             message.error(response.message);
            // message.error(response.message);
-            <Alert message="Error registering user" description={response.message} type="error" showIcon />
+            //<Alert message="Error registering user" description={response.message} type="error" showIcon />
           }
         } catch (error) {
           message.error(error.message);
-          <Alert message="Error registering user" description={error.message} type="error" showIcon />
+          //<Alert message="Error registering user" description={error.message} type="error" showIcon />
         }
       };
 
