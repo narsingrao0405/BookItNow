@@ -4,14 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { HomeOutlined, LogoutOutlined, ProfileOutlined, UserOutlined } from "@ant-design/icons";
 import { GetCurrentUser } from "../api/users";
 import { setUser } from "../redux/userSlice";
-import { message, Layout, Menu } from "antd";
+import { message, Layout, Menu, App } from "antd";
 import { ShowLoader, HideLoader } from "../redux/loaderSlice";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-    const { user } = useSelector((state: { users: any }) => state.users);
+    const { user } = useSelector((state: { users?: { user: any } }) => state.users || { user: null });
+    console.log("User in ProtectedRoute", user);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { Header, Content } = Layout;
+    const { Header, Footer  } = Layout;
 
     const navItems = [
         {
@@ -78,35 +79,28 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     }, []);
 
     return (
-        <Layout style={{ minHeight: "100vh" }}>
-            <Header className="header">
-                <Menu
-                    theme="dark"
-                    mode="horizontal"
-                    defaultSelectedKeys={["home"]}
-                    items={navItems}
-                    onClick={(item) => {
-                        if (item.key === "home") {
-                            navigate("/home");
-                        } else if (item.key === "logout") {
-                            localStorage.removeItem("token");
-                            navigate("/login");
-                        } else if (item.key === "profile") {
-                            if (user.role === "admin") {
-                                navigate("/admin");
-                            } else if (user.role === "partner") {
-                                navigate("/partner");
-                            } else {
-                                navigate("/user");
-                            }
-                        }
-                    }}
-                />
+        <>
+            <div className="d-flex justify-content-center align-items-center vh-100">
+                <h1>BookitNow</h1>
+            </div>
+        <Layout>
+            <Header className="d-flex  justify-content=between" style={{
+                position: "sticky",
+                top : 0,
+                zIndex: 1,
+                width: "100%",
+                background: "#001529",
+                display: "flex",
+                alignItems: "center",
+            }}>
+                <Menu theme="dark" mode="horizontal" items={navItems}></Menu>
             </Header>
-            <Content style={{ padding: "24px" }}>
-                {children} {/* Render the protected content here */}
-            </Content>
+            <div> {children}</div>
+            <Footer style={{ textAlign: "center", background: "#001529", color: "#fff" }}>
+                BookitNow ©2023 Created by K2 IT Solutions
+            </Footer>
         </Layout>
+        </>
     );
 };
 
