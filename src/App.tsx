@@ -9,6 +9,7 @@ import ProtectedRoute from './client/components/ProtectedRoute';
 import { Provider} from "react-redux";
 import store from "./client/redux/store";
 import ErrorBoundary  from 'antd/es/alert/ErrorBoundary';
+import Admin from './client/Admin';
 
 
 
@@ -23,6 +24,7 @@ function App() {
           <Route path='/Login' element={< Login/>}></Route>
           <Route path='/Register' element={<Register/>}></Route>
           <Route path='/Home' element={ <ProtectedRoute> < Home /></ProtectedRoute> }></Route>
+          <Route path='/Admin' element={ <ProtectedRoute> < Admin /></ProtectedRoute> }></Route>
         </Routes>
       </ErrorBoundary>
       </BrowserRouter>

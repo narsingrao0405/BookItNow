@@ -80,9 +80,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
     return (
         <>
-            <div className="d-flex justify-content-center align-items-center vh-100">
-                <h1>BookitNow</h1>
-            </div>
+            
         <Layout>
             <Header className="d-flex  justify-content=between" style={{
                 position: "sticky",

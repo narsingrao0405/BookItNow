@@ -38,7 +38,7 @@ export const loginUser = async (userData) => {
 export const GetCurrentUser = async () => {
     try{
         const response = await axiosInstance.get('/api/users/get-current-user');
-        message.success("User Login Successfully");
+        //message.success("User Login Successfully");
         return response.data;
     }catch(error){
         console.error("Error fetching current user", error);
