@@ -10,6 +10,7 @@ const app = express();
 require('dotenv').config();
 const connectDB = require('./config/db');
 const userRouter = require('./routes/userRoutes');
+const movieRouter = require('./routes/movieRoute');
 const middlewareWrapper = require('cors');
 connectDB();
 // Enable CORS
@@ -25,6 +26,7 @@ app.use(cors({
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/api/users', userRouter); 
+app.use('/api/movies', movieRouter)
 app.use(auth);
 
 

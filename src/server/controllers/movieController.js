@@ -8,7 +8,9 @@ const getAllMovies = async (req, res) => {
         res.send({
             message: "All movies fetched successfully",
             status: true,
-            data: movies
+            data: movies,
+            statusCode: 200
+
         })
     }
         catch(err){
@@ -16,34 +18,40 @@ const getAllMovies = async (req, res) => {
             res.send({
                 message: err.message,
                 status: false,
-                data: null
+                data: null,
+                statusCode: 500
             })
         }
     
 }
 
 const getMovieById = async (req, res) => {
-    const movieId = req.body.movieId;
+    const movieId = req.params.id;
+    //console.log("Movie ID::::::::::", movieId);
+    //console.log("Movie ID from Body::::::::::", req.params);
     try{
         const movie = await Movie.findById(movieId);
         if(!movie){
             res.send({
                 message: "Movie not found",
                 status: false,
-                data: null
+                data: null,
+                statusCode: 404
             })
         }
         res.send({
             message: "Movie fetched successfully",
             status: true,
-            data: movie
+            data: movie,
+            statusCode: 200
         })
     }catch(err){
         console.log(err);
         res.send({
             message: err.message,
             status: false,
-            data: null
+            data: null,
+            statusCode: 500
         })
     }
 
@@ -66,14 +74,16 @@ const addMovie = async (req, res)  => {
         res.send({
             message: "Movie added successfully",
             status: true,
-            data: newMovie
+            data: newMovie,
+            statusCode: 201
         })
     }catch(err){
         console.log(err);
         res.send({
             message: err.message,
             status: false,
-            data: null
+            data: null,
+            statusCode: 500
         })
     }
 
@@ -81,21 +91,23 @@ const addMovie = async (req, res)  => {
 
 const deleteMovie = async (req, res) => {
     try{
-        const movieId = req.body.movieId;
+        const movieId = req.params._id;
         const deletedMovie = await Movie.findByIdAndDelete(movieId);
         if(!deletedMovie){
             res.send(
                 {
                     message: "Movie not found",
                     status: false,
-                    data: null
+                    data: null,
+                    statusCode: 404
                 }
             )
         }
         res.send ({
             message: "Movie deleted successfully",
             status: true,
-            data: deletedMovie
+            data: deletedMovie,
+            statusCode: 200
         })
     
 
@@ -104,7 +116,8 @@ const deleteMovie = async (req, res) => {
         res.send({
             message: err.message,
             status: false,
-            data: null
+            data: null,
+            statusCode: 500
         })
     }
 
@@ -115,26 +128,29 @@ const deleteMovie = async (req, res) => {
 
 const updateMovie = async (req, res) => {
     try{
-        const movieId = req.body.movieId;
+        const movieId = req.body._id;
         const updatedMovie = await Movie.findByIdAndUpdate(movieId, req.body, {new: true});
         if(!updatedMovie){
             res.send({
                 message: "Movie not found",
                 status: false,
-                data: null
+                data: null,
+                statusCode: 404
             })
         }
         res.send({
             message: "Movie updated successfully",
             status: true,
-            data: updatedMovie
+            data: updatedMovie,
+            statusCode: 200
         })
     }catch(err){
         console.log(err);
         res.send({
             message: err.message,
             status: false,
-            data: null
+            data: null,
+            statusCode: 500
         })
     }
 
