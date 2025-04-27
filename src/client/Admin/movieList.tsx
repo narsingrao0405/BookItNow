@@ -142,6 +142,7 @@ const MovieList: React.FC = () => {
                     onClick={() => {
                         setIsModelOPen(true);
                         setFormType("add");
+
                     }}
                 >
                     Add Movie
@@ -161,7 +162,7 @@ const MovieList: React.FC = () => {
                             setIsModelOPen={setIsModelOPen}
                             formType={formType}
                             selectedMovie={selectedMovie}
-                            serSelectedMovie={setSelectedMovie}
+                            setSelectedMovie={setSelectedMovie}
                             getMovieData={getMovieData}
                         />
                     )

@@ -1,29 +1,29 @@
+import React from "react";
 import { Col, Modal, Row, Form, Input, Select, Button, message } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import { ShowLoading, HideLoading } from "../redux/loaderSlice";
+import { ShowLoader, HideLoader } from "../redux/loaderSlice";
 import { useDispatch } from "react-redux";
 import { addMovie, updateMovie } from "../api/movie";
 import moment from "moment";
-import { Dispatch } from "redux";
-
-interface Movie {
-    _id?: string;
-    title?: string;
-    description?: string;
-    duration?: number;
-    language?: string;
-    releaseDate?: string;
-    genre?: string;
-    poster?: string;
-}
 
 interface MovieFormProps {
-    isModalOpen: boolean;
+    isModalOpen: boolean;x
     setIsModalOpen: (isOpen: boolean) => void;
     selectedMovie: Movie | null;
     setSelectedMovie: (movie: Movie | null) => void;
     formType: "add" | "edit";
     getData: () => void;
+}
+
+interface Movie {
+    _id?: string;
+    title: string;
+    description: string;
+    duration: number;
+    language: string;
+    releaseDate: string;
+    genre: string;
+    poster: string;
 }
 
 const MovieForm: React.FC<MovieFormProps> = ({
@@ -34,19 +34,19 @@ const MovieForm: React.FC<MovieFormProps> = ({
     formType,
     getData,
 }) => {
-    const dispatch: Dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-    if (selectedMovie) {
-        selectedMovie.releaseDate = moment(selectedMovie.releaseDate).format(
-            "YYYY-MM-DD"
-        );
-    }
+    const movieInitialValues = selectedMovie
+        ? {
+                ...selectedMovie,
+                releaseDate: moment(selectedMovie.releaseDate).format("YYYY-MM-DD"),
+            }
+        : {};
 
     const onFinish = async (values: Movie) => {
         try {
-            dispatch(ShowLoading());
-            dispatch(ShowLoading({ isLoading: true }));
-            let response: { success: boolean; message: string } | undefined;
+            dispatch(ShowLoader());
+            let response = null;
             if (formType === "add") {
                 response = await addMovie(values);
             } else {
@@ -57,13 +57,13 @@ const MovieForm: React.FC<MovieFormProps> = ({
                 message.success(response.message);
                 setIsModalOpen(false);
             } else {
-                message.error(response?.message || "Something went wrong!");
+                message.error(response?.message || "Something went wrong");
             }
             setSelectedMovie(null);
-            dispatch(HideLoading());
-            dispatch(HideLoading({ isLoading: false }));
-            dispatch(HideLoading());
-            message.error(err.message || "An error occurred!");
+            dispatch(HideLoader());
+        } catch (err: any) {
+            dispatch(HideLoader());
+            message.error(err.message);
         }
     };
 
@@ -81,9 +81,9 @@ const MovieForm: React.FC<MovieFormProps> = ({
             width={800}
             footer={null}
         >
-            <Form<Movie>
+            <Form
                 layout="vertical"
-                initialValues={selectedMovie || {}}
+                initialValues={movieInitialValues}
                 onFinish={onFinish}
             >
                 <Row gutter={{ xs: 6, sm: 10, md: 12, lg: 16 }}>
