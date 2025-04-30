@@ -4,7 +4,7 @@ import { axiosInstance} from ".";
 const API_URL = '/api/movies';
 
 //Get All Movies --- GET
-export const getAllMovies = async (values: any) => {
+export const getAllMovies = async () => {
     try{
         const response = await axiosInstance.get(`${API_URL}/getAllMovies`, {params: values});
         console.log("Get All Movies Response:::::::", response);
