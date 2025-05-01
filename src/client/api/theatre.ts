@@ -45,6 +45,21 @@ export const  getAllTheatresForAdmin = async () => {
 
 };
 
+export const getALlTheatresByMovie = async (movie: any, date:any) => {
+    try{
+        const response = await axiosInstance.get(
+            `${API_URL}/get-all-theatres-by-movie/${movie}/${date}`,
+        );
+        return response.data;
+
+    }catch(error:any){
+        console.log("Error in Fetching all theatres by movie::::::::::", error);
+        return error.response.data;
+
+    }
+
+}
+
 export const updateTheatre  = async (payload : any) => {
     try{
         const response = await axiosInstance.put(
